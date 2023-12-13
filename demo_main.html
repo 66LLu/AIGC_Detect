@@ -1,0 +1,214 @@
+<!DOCTYPE html>	
+<html>	
+<head>	
+    <title>FilePond from CDN</title>	
+ 
+	
+    <!-- Filepond CSS -->	
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">	
+    <!--    FilePondPluginImagePreview 插件 CSS-->	
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">	
+    <!--    FilePondPluginImageEdit 插件 CSS-->	
+    <link href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css" rel="stylesheet">	
+</head>	
+<style>
+    #show-box-id img, #show-box-id video, #show-box-id audio {
+    /* 根据文件的大小设置宽度和高度 */
+    width: 300px;  /* 你可以根据需要调整这个值 */
+    height: 300px;  /* 你可以根据需要调整这个值 */
+
+    /* 控制内容如何适应盒子的大小 */
+    object-fit: contain;
+}
+
+</style>
+<body>
+    <!-- 上传文件的页面 -->
+    <div id="upload-page">
+        <!-- 其他的主体标签 -->
+        <header>
+            <!-- 快捷菜单模块 -->
+            <div class="xtx-shortcut">
+    
+                <!-- 版心的盒子 -->
+                <nav class="container">
+                    <ul class="fl">
+                        <a href="#">
+                        <div class="text">
+                            <div class="text1">音视频联合鉴伪系统</div>
+                            <div class="text2">CUC</div>
+                        </div>  
+                        </a>
+                    </ul>              
+                    <ul class="fr">
+                        <div class="list">
+                            <li class="special"><a href="首页.html">Home</a> </li>
+                            <li class="special"><a href="demo (2).html">Demo</a> </li>
+                            <!-- <li class="special"><a href="#">Algorithm</a> </li> -->
+                            <li >
+                               
+                                <div class="dropdown" style="position: static;">
+                                    <a href="算法详情MVSS.html">Algorithm</a>
+                                    <div class="dropdown-content">
+                                      <a href="算法详情MVSS.html">MVSS</a>
+                                      <a href="算法详情MABC.html">MABC</a>
+                                      <a href="算法详情OSN.html">OSN</a>
+                                      <a href="算法详情W2V.html">W2V</a>
+                                      <a href="算法详情traditon.html">tradition</a>
+                                    </div>
+                                  </div>
+                                  </li>
+                            <li class="special"><a href="#">Paper</a> </li>
+                            <li><a href="#"><img src="./github.png.png" alt=""></a></li>  
+                        </div>     
+                    </ul>
+                    
+                </nav>
+                <div class="line"></div>
+                <!-- 竖线 -->
+        <div style="position: absolute; left: 25%; top: 83px; bottom: 0; border-left: 1px solid; height: calc(100vh - 50px);"></div>
+
+
+        <!-- 左侧部分 -->
+        <div style="position: absolute; left: 0; width: 25%; height: 100vh;">
+            <!-- 上部分 -->
+            <div style="text-align: center; padding-top: 20px;">上传媒体</div>
+            <!-- 中部分 -->
+            <!-- <div style="width: 100%; height: 50%; background: #eee; margin-top: 20px;"></div> -->
+            <!-- 下部分 -->
+            <!-- <div style="width: 100%; height: 30%; background: #ddd; margin-top: 20px; text-align: center; line-height: 2; cursor: pointer;">
+                点击或拖拽上传文件
+            </div> -->
+            <!-- 我们将把这个输入框变成上传文件框 -->	
+     
+        <input type="file" class="filepond">	
+        
+
+
+        <!-- FilePondPluginImagePreview 插件js-->	
+        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>	
+        <!--FilePondPluginImageEdit 插件js-->	
+        <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>	
+        <!--FilePondPluginFileValidateSize 插件js-->	
+        <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>	
+        <!--FilePondPluginFileValidateType 插件js-->	
+        <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>	
+        <!--FilePondPluginImageCrop 插件js-->	
+        <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>	
+        <!--FilePondPluginImageExifOrientation 插件js-->	
+        <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>	
+        <!--引入Filepond的js-->	
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>	
+        <!-- 显示盒子 -->
+        <div id="show-box-id"></div>
+
+        <!-- 在这里添加你的脚本 -->
+        <script>
+            // 你的 FilePond 代码
+            var inputElement = document.querySelector('input[type="file"]');		
+            FilePond.registerPlugin(	
+                FilePondPluginImagePreview,	
+                FilePondPluginImageEdit,	
+                FilePondPluginFileValidateSize,	
+                FilePondPluginImageCrop,	
+                FilePondPluginFileValidateType,	
+                FilePondPluginImageExifOrientation	   
+            );	
+            FilePond.setOptions({	
+                server: 'http://localhost:3000/upload',	
+                allowFileTypeValidation: false,	
+                acceptedFileTypes: "image/jpg",	
+                allowImageCrop: true,		
+                allowFileSizeValidation: true,	
+                maxFileSize: null,	
+                allowImageExifOrientation: true	                    
+            });	
+            var pond = FilePond.create(inputElement);
+            pond.on('processfile', (error, file) => {
+                if (error) {
+                    console.log('Oh no', error);
+                    return;
+                }
+                console.log('File processed', file);
+                var element;
+                var fileUrl = URL.createObjectURL(file.file);
+                var wrapper = document.createElement('div');
+                if (file.fileType.startsWith('image/')) {
+                    element = document.createElement('img');
+                    element.src = fileUrl;
+                } else if (file.fileType.startsWith('audio/')) {
+                    element = document.createElement('audio');
+                    element.src = fileUrl;
+                    element.controls = true;
+                } else if (file.fileType.startsWith('video/')) {
+                    element = document.createElement('video');
+                    element.src = fileUrl;
+                    element.controls = true;
+                } else {
+                    element = document.createElement('a');
+                    element.href = fileUrl;
+                    element.textContent = 'Download ' + file.filename;
+                    element.download = file.filename;
+                }
+                wrapper.appendChild(element);
+                // 为包装元素添加点击事件
+                wrapper.addEventListener('click', function() {
+                    // 将文件的 Data URL 存储在 localStorage 中
+                    localStorage.setItem('myFile', element.src);
+
+                    // 隐藏上传文件的页面，显示 '鉴别中.html' 页面
+                    document.getElementById('upload-page').style.display = 'none';
+                    document.getElementById('preview-page').style.display = 'block';
+
+                    // 清除旧的预览
+                    document.getElementById('preview-box-id').innerHTML = '';
+
+                    // 在 '鉴别中.html' 页面中显示文件
+                    var previewElement;
+                    if (file.fileType.startsWith('image/')) {
+                        previewElement = document.createElement('img');
+                        previewElement.style.width = '500px';
+                    } else if (file.fileType.startsWith('audio/')) {
+                        previewElement = document.createElement('audio');
+                        previewElement.controls = true;
+                    } else if (file.fileType.startsWith('video/')) {
+                        previewElement = document.createElement('video');
+                        previewElement.controls = true;
+                        previewElement.style.width = '500px';
+                    }
+                    previewElement.src = element.src;
+                    document.getElementById('preview-box-id').appendChild(previewElement);
+                });
+                // 将链接元素添加到你想要显示文件的盒子中
+                document.getElementById('show-box-id').appendChild(wrapper);
+            });
+            FilePond.create(inputElement)
+        </script>
+    </div>
+    <!-- 右侧部分 -->
+        <div style="position: absolute; left: 25%; width: 75%; height: 100vh; overflow-x: scroll;">
+            <!-- 左上角 -->
+            <div style="padding: 20px;">在库中选择媒体</div>
+            <!-- 其他部分 -->
+            <div style="display: flex; gap: 10px; padding: 20px;">
+                
+                <!-- <div style="width: 200px; height: 100px; background: #eee;"></div>
+                <div style="width: 200px; height: 100px; background: #eee;"></div> -->
+                <!-- <div style="width: 200px; height: 100px; background: #eee;"> -->
+                <!-- <a href="鉴别中.html"> -->
+                    <div id="show-box-id"></div>
+                <!-- </a> -->
+            <!-- </div> -->
+                <!-- 更多内容 -->
+            </div>
+        </div>
+    </header>
+
+
+    <!-- '鉴别中.html' 页面 -->
+    <div id="preview-page" style="display: none;">
+        <!-- 显示盒子 -->
+        <div id="preview-box-id"></div>
+    </div>
+</body>
+</html>

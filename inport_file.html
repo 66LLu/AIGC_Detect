@@ -1,0 +1,139 @@
+<!DOCTYPE html>	
+<html>	
+<head>	
+    <title>FilePond from CDN</title>	
+ 
+	
+    <!-- Filepond CSS -->	
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">	
+    <!--    FilePondPluginImagePreview 插件 CSS-->	
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">	
+    <!--    FilePondPluginImageEdit 插件 CSS-->	
+    <link href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css" rel="stylesheet">	
+</head>	
+<style>
+    #show-box-id img, #show-box-id video, #show-box-id audio {
+    /* 根据文件的大小设置宽度和高度 */
+    width: 300px;  /* 你可以根据需要调整这个值 */
+    height: 300px;  /* 你可以根据需要调整这个值 */
+
+    /* 控制内容如何适应盒子的大小 */
+    object-fit: contain;
+}
+
+</style>
+	
+<body>	
+	
+<!-- 我们将把这个输入框变成上传文件框 -->	
+<input type="file" class="filepond">	
+<div id="show-box-id"></div>
+
+
+<!-- FilePondPluginImagePreview 插件js-->	
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>	
+<!--FilePondPluginImageEdit 插件js-->	
+<script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>	
+<!--FilePondPluginFileValidateSize 插件js-->	
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>	
+<!--FilePondPluginFileValidateType 插件js-->	
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>	
+<!--FilePondPluginImageCrop 插件js-->	
+<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>	
+<!--FilePondPluginImageExifOrientation 插件js-->	
+<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>	
+<!--引入Filepond的js-->	
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>	
+ 
+	
+<script>	
+    // querySelector() 方法返回文档中匹配指定 CSS 选择器的一个元素。	
+    var inputElement = document.querySelector('input[type="file"]');	
+ 
+
+    FilePond.registerPlugin(	
+        FilePondPluginImagePreview,	
+        FilePondPluginImageEdit,	
+        FilePondPluginFileValidateSize,	
+        FilePondPluginImageCrop,	
+        FilePondPluginFileValidateType,	
+        FilePondPluginImageExifOrientation	
+ 
+	
+    );	
+ 
+	
+    FilePond.setOptions({	
+        // 设置单个URL是定义服务器配置的最基本形式。	
+        server: 'http://localhost:3000/upload',	
+        // 设置图片类型只能为png才能上传	
+        allowFileTypeValidation: false,	
+        acceptedFileTypes: "image/jpg",	
+        // 启用或禁用图像裁剪	
+        allowImageCrop: true,	
+ 
+	
+        // 启用或禁用文件大小验证	
+        allowFileSizeValidation: true,	
+        maxFileSize: null,	
+ 
+	
+        // 启用或禁用提取EXIF信息	
+        allowImageExifOrientation: true	
+ 
+	
+    });	
+ 
+    // 使用create方法逐步增强基本文件输入到FilePond元素。	
+
+
+    var pond = FilePond.create(inputElement);
+
+    // 监听 onprocessfile 事件
+    pond.on('processfile', (error, file) => {
+    if (error) {
+        console.log('Oh no', error);
+        return;
+    }
+
+    // 在这里，你可以获取到文件的信息，包括文件名、大小、类型等
+    console.log('File processed', file);
+
+    // 根据文件类型创建不同的元素
+    var element;
+    if (file.fileType.startsWith('image/')) {
+        // 如果文件是一个图像，创建一个 img 元素
+        element = document.createElement('img');
+        element.src = URL.createObjectURL(file.file);
+    } else if (file.fileType.startsWith('audio/')) {
+        // 如果文件是一个音频，创建一个 audio 元素
+        element = document.createElement('audio');
+        element.src = URL.createObjectURL(file.file);
+        element.controls = true;
+    } else if (file.fileType.startsWith('video/')) {
+        // 如果文件是一个视频，创建一个 video 元素
+        element = document.createElement('video');
+        element.src = URL.createObjectURL(file.file);
+        element.controls = true;
+    } else {
+        // 对于其他类型的文件，创建一个 a 元素
+        element = document.createElement('a');
+        element.href = URL.createObjectURL(file.file);
+        element.textContent = 'Download ' + file.filename;
+        element.download = file.filename;
+    }
+
+    // 将元素添加到你想要显示文件的盒子中
+    document.getElementById('show-box-id').appendChild(element);
+});
+
+
+	
+    // 使用create方法逐步增强基本文件输入到FilePond元素。	
+    FilePond.create(inputElement)	
+
+</script>	
+ 
+	
+</body>	
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音视频联合鉴伪系统</title>
+    <meta
+        name="description" 
+        content="音视频联合鉴伪系统"  
+        >  
+    
+    <meta name="keywords" content="AI 鉴伪">
+
+    <link rel="stylesheet" href="base-tradition.css">  
+    <link rel="stylesheet" href="common-tradition.css">
+
+</head>
+
+<body>
+    <header>
+        <!-- 快捷菜单模块 -->
+        <div class="xtx-shortcut">
+
+            <!-- 版心的盒子 -->
+            <nav class="container">
+                <ul class="fl">
+                    <a href="#">
+                    <div class="text">
+                        <div class="text1">音视频联合鉴伪系统</div>
+                        <div class="text2">CUC</div>
+                    </div>  
+                    </a>
+                </ul>              
+                <ul class="fr">
+                    <div class="list">
+                        <li><a href="首页.html">Home</a> </li>
+                        <li><a href="demo (2).html">Demo</a> </li>
+                        <!-- <li><a href="#">Algorithm</a> </li> -->
+                        <li>
+                           
+                            <div class="dropdown">
+                                <a href="#">Algorithm</a>
+                                <div class="dropdown-content">
+                                  <a href="算法详情MVSS.html">MVSS</a>
+                                  <a href="算法详情MABC.html">MABC</a>
+                                  <a href="算法详情OSN.html">OSN</a>
+                                  <a href="算法详情W2V.html">W2V</a>
+                                  <a href="算法详情traditon.html">tradition</a>
+                                </div>
+                              </div>
+                        </li>
+                        <li><a href="#">Paper</a> </li>
+                        <li><a href="#"><img src="./github.png.png" alt=""></a></li>  
+                    </div>     
+                </ul>
+                
+            </nav>
+            <div class="line"></div>
+
+            <div class="container">
+                    <div class="tradition">
+                        <p>传统音频检测</p>
+                    </div>
+                    <hr class="middle">
+                    <div class="disp"><img src="image.png" alt=""></div>
+                    <hr class="last">
+                    <div class="intro">
+                        <p>介绍</p>
+                    </div>
+                    <div class="contain">
+                        <p>采用线性支持向量机分类模型，基于深度伪造语音数据集对模型进行训练, <br>
+                            构造得到合成语音鉴伪模型。该模型采用九分类法，前八种分类(类别0～7)<br>
+                            分别代表8种不同的合成算法，类别8表示真实音频。本模型要求输入格式<br>
+                            为wav或mp3的待检测音频，先将音频统一转换为模型适用的16k采样率, <br>
+                            再利用opensmile工具包提取相关特征，随后将待测音频文件的特征输入 <br>
+                            训练好的模型进行检测。检测结果以文字形式输出，结果内容包括测试音频 <br>
+                            判断为真实/伪造，若判断为伪造音频，则还会输出判断的伪造算法</p>
+                    </div>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

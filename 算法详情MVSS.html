@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音视频联合鉴伪系统</title>
+    <meta
+        name="description" 
+        content="音视频联合鉴伪系统"  
+        >  
+    
+    <meta name="keywords" content="AI 鉴伪">
+
+    <link rel="stylesheet" href="baseMVSS.css">  
+    <link rel="stylesheet" href="commonMVSS.css">
+
+</head>
+
+<body>
+    <header>
+        <!-- 快捷菜单模块 -->
+        <div class="xtx-shortcut">
+
+            <!-- 版心的盒子 -->
+            <nav class="container">
+                <ul class="fl">
+                    <a href="#">
+                    <div class="text">
+                        <div class="text1">音视频联合鉴伪系统</div>
+                        <div class="text2">CUC</div>
+                    </div>  
+                    </a>
+                </ul>              
+                <ul class="fr">
+                    <div class="list">
+                        <li><a href="首页.html">Home</a> </li>
+                        <li><a href="demo (2).html">Demo</a> </li>
+                        <!-- <li><a href="#">Algorithm</a> </li> -->
+                        <li>
+                           
+                            <div class="dropdown">
+                                <a href="#">Algorithm</a>
+                                <div class="dropdown-content">
+                                   <a href="算法详情MVSS.html">MVSS</a>
+                                  <a href="算法详情MABC.html">MABC</a>
+                                  <a href="算法详情OSN.html">OSN</a>
+                                  <a href="算法详情W2V.html">W2V</a>
+                                  <a href="算法详情traditon.html">tradition</a>
+                                </div>
+                              </div>
+                        </li>
+                        <li><a href="#">Paper</a> </li>
+                        <li><a href="#"><img src="./github.png.png" alt=""></a></li>  
+                    </div>     
+                </ul>
+                
+            </nav>
+            <div class="line"></div>
+
+            <div class="container">
+                    <div class="MVSS">
+                        <p>MVSS</p>
+                    </div>
+                    <hr class="middle">
+                    <div class="disp"><img src="MVSS.png" alt=""></div>
+                    <hr class="last">
+                    <div class="intro">
+                        <p>介绍</p>
+                    </div>
+                    <div class="contain">
+                        <p>
+                        提出了一个多视图、多尺度的通用图像篡改检测网络MVSS-Net。<br>
+                        多视图体现在使用边缘监督分支引导网络更关注篡改区域边缘， <br>
+                        使用噪声分支提取图像局部噪声相关性，最后利用空间和通道注意力 <br>
+                        融合两分支特征。多尺度体现在使用像素级分类损失的同时利用图像级分类损失<br>
+                        使网络在特异性和敏感性之间取得平衡。通过多视图和多尺度提升模型泛化性并减少虚警。<br>
+                        由于绿幕合成的视频中背景和前景主体一般是用不同拍摄设备在不同环境下获取的，<br>
+                        所以两者在噪声分布上会有区别；在合成时，主体和背景融合的边缘可能会留下痕迹。<br>
+                        所以MVSS-Net算法通过深度学习网络提取图像中的噪声和边缘信息， <br>
+                        联合两种信息检测出图像的篡改区域。
+                        </p>
+                    </div>
+            </div>
+
+
+        </div>
+    </header>
+</body>
+</html>

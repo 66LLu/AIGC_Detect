@@ -1,0 +1,140 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    width: 1920px;
+    height: 1080px;
+}
+
+.header{
+    margin-top: 12px;
+    height: 58px;
+    opacity: 1;
+}
+
+.header h1{
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 66px;
+    letter-spacing: 0px;
+    line-height: 34.75px;
+    color: rgba(0, 0, 0, 1);
+}
+
+.header h2{
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 66px;
+    letter-spacing: 0px;
+    line-height: 23.17px;
+    color: rgba(0, 0, 0, 1);
+    text-align: left;
+    vertical-align: top;
+}
+
+.hr1{
+    position: absolute;
+    left: 0px;
+    top: 82px;
+    width: 1920px;
+    height: 0px;
+    opacity: 1;
+     border: 1px solid rgba(166, 166, 166, 1);
+}
+
+.nav{
+    float: right;
+    height: 58px;
+}
+
+.nav li{
+    float: left;
+    margin: 25px;
+    font-size: 14px;
+    top: 25px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    color: rgba(0, 0, 0, 1);
+    text-align: center;
+}
+
+.github{
+    width: 33px;
+    height: 32px;
+    background: url(github.png);
+}
+
+h3{
+    position: relative;
+    top: 88px;
+    height: 80px;
+    opacity: 1;
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 69.5px;
+    color: rgba(0, 0, 0, 1);
+    text-align: center;
+    vertical-align: top;
+}
+
+.middle{
+    position: absolute;
+    left: 399px;
+    top: 262px;
+    width: 1122px;
+    text-align: center;
+    height: 0px;
+    opacity: 1;
+
+    border: 1px solid rgba(0, 0, 0, 1);
+}
+
+.disp{
+    width: 906px;
+    height: 393px;
+    position: absolute;
+    left: 507px;
+    top: 302px;
+    background:url(image.png)
+}
+
+.last{
+    position: absolute;
+    left: 399px;
+    top: 735px;
+    width: 1122px;
+    height: 0px;
+    opacity: 1;
+    border: 1px solid rgba(0, 0, 0, 1);
+}
+
+h4{
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 69.5px;
+    color: rgba(0, 0, 0, 1);
+    text-align: left;
+    vertical-align: top;
+}
+
+.intro{
+    position: absolute;
+    left: 867px;
+    top: 756px;
+    width: 202px;
+    height: 80px;
+    opacity: 1;
+}

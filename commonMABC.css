@@ -1,0 +1,203 @@
+/* 版心的公共类 */
+.container {
+    position: relative;
+    width: 1240px;
+    margin:  0 auto;
+}
+
+/* ------------快捷菜单模块：xtx-shortcut----------- */
+
+
+
+.xtx-shortcut .text {
+    position: absolute;
+    top: 12px;
+    /*文本 1*/
+    left: 61px;
+    top: 12px;
+    width: 216px;
+    height: 58px;
+    opacity: 1;
+}
+
+.xtx-shortcut .text1 {
+    /** 文本1 */
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 34.75px;
+    color: rgba(0, 0, 0, 1);
+}
+
+.xtx-shortcut .text2 {
+    /** 文本2 */
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 23.17px;
+    color: rgba(0, 0, 0, 1);
+    text-align: left;
+    vertical-align: top;
+}
+
+
+.xtx-shortcut .list {
+    position: absolute;
+    right: 60px;
+}
+
+
+.xtx-shortcut {
+    height: 82px;
+    background-color: #ffffff;
+}
+
+
+.xtx-shortcut .container {
+    height: 82px;
+    /* background-color: skyblue; */
+}
+
+
+.xtx-shortcut list {
+    position: absolute;
+    right: 58px;
+}
+
+.xtx-shortcut ul li {
+    float: left;
+    line-height: 82px;
+    color: #666666;
+}
+
+
+.xtx-shortcut ul a {
+    margin: 0 16px;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 23.17px;
+    color: rgba(0, 0, 0, 1);
+    text-align: left;
+}
+
+
+.xtx-shortcut li:last-child a {
+    margin-right: 0 ;
+}
+
+
+.xtx-shortcut .line {
+    position: absolute;
+    left: 0px;
+    top: 82px;
+    width: 1920px;
+    height: 0px;
+    /* opacity: 1; */
+    border: 1px solid rgba(166, 166, 166, 1);
+    }
+/* -----------------下拉菜单---------------- */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 120px;
+    box-shadow: 0 0 4px 2px #adabab;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    margin: 0 auto;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;margin: 0 auto;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+
+/*  ---------------------------------------- */
+
+.MABC{
+    position: absolute;
+    left: 550px;
+    top: 80px;
+    opacity: 1;
+}
+.MABC p{
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 69.5px;
+    color: rgba(0, 0, 0, 1);
+    text-align: left;
+    vertical-align: top;
+}
+.middle{
+    position: absolute;
+    left: 200px;
+    top: 150px;
+    width: 900px;
+    height: 0px;
+    opacity: 1;
+    border: 1px solid rgba(0, 0, 0, 1);
+}
+
+.disp{
+    position: absolute;
+    left: 250px;
+    top: 200px;
+    opacity: 1;
+}
+.disp img{
+    width: 700px;
+}
+
+.last{
+    position: absolute;
+    left: 200px;
+    top: 550px;
+    width: 900px;
+    height: 0px;
+    opacity: 1;
+    border: 1px solid rgba(0, 0, 0, 1);
+}
+
+.intro{
+    position: absolute;
+    left: 600px;
+    top: 600px;
+    opacity: 1;
+}
+
+.intro p{
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 69.5px;
+    color: rgba(0, 0, 0, 1);
+    text-align: left;
+    vertical-align: top;
+}
+.contain{
+    position: absolute;
+    left: 200px;
+    top: 680px;
+    opacity: 1;
+}
+
+.contain p{
+    font-size: 24px;
+    color: rgba(0, 0, 0, 1);
+    text-align: center;
+    vertical-align: top;
+}
+
+

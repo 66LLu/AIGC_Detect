@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音视频联合鉴伪系统</title>
+    <meta
+        name="description" 
+        content="音视频联合鉴伪系统"  
+        >  
+    
+    <meta name="keywords" content="AI 鉴伪">
+
+    <link rel="stylesheet" href="baseMABC.css">  
+    <link rel="stylesheet" href="commonMABC.css">
+
+</head>
+
+<body>
+    <header>
+        <!-- 快捷菜单模块 -->
+        <div class="xtx-shortcut">
+
+            <!-- 版心的盒子 -->
+            <nav class="container">
+                <ul class="fl">
+                    <a href="#">
+                    <div class="text">
+                        <div class="text1">音视频联合鉴伪系统</div>
+                        <div class="text2">CUC</div>
+                    </div>  
+                    </a>
+                </ul>              
+                <ul class="fr">
+                    <div class="list">
+                        <li><a href="首页.html">Home</a> </li>
+                        <li><a href="demo (2).html">Demo</a> </li>
+                        <!-- <li><a href="#">Algorithm</a> </li> -->
+                        <li>
+                           
+                            <div class="dropdown">
+                                <a href="#">Algorithm</a>
+                                <div class="dropdown-content">
+                                   <a href="算法详情MVSS.html">MVSS</a>
+                                  <a href="算法详情MABC.html">MABC</a>
+                                  <a href="算法详情OSN.html">OSN</a>
+                                  <a href="算法详情W2V.html">W2V</a>
+                                  <a href="算法详情traditon.html">tradition</a>
+                                </div>
+                              </div>
+                        </li>
+                        <li><a href="#">Paper</a> </li>
+                        <li><a href="#"><img src="./github.png.png" alt=""></a></li>  
+                    </div>     
+                </ul>
+                
+            </nav>
+            <div class="line"></div>
+
+            <div class="container">
+                    <div class="MABC">
+                        <p>MABC</p>
+                    </div>
+                    <hr class="middle">
+                    <div class="disp"><img src="" alt=""></div>
+                    <hr class="last">
+                    <div class="intro">
+                        <p>介绍</p>
+                    </div>
+                    <div class="contain">
+                        <p>
+                            本算法的输入是一个带有音频的视频，将音视频的特征提取后经过编码,<br>
+                            然后通过一个由自注意力和跨模态注意力构成的混注意力网络联合学习音视频的特征。<br>
+                            将联合学习后的音视频特征采用边界匹配的方法分别生成伪造边界提议图,<br>
+                            并通过一定的权重融合,获得整个视频的伪造边界提议图，最终通过软非极大抑制<br>
+                            去除重复的提议，最后给出概率最高的伪造时间段,如果概率大于某个阈值，<br>
+                            则判断该时间段内视频经过伪造。
+
+                        </p>
+                    </div>
+            </div>
+
+
+        </div>
+    </header>
+</body>
+</html>

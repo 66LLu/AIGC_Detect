@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音视频联合鉴伪系统</title>  <!-- 网页标题 -->
+    
+    <meta
+        name="description" 
+        content="音视频联合鉴伪系统"  
+        >  <!-- 网页描述 -->
+    
+    <meta name="keywords" content="AI 鉴伪">  <!-- 网页关键词 -->
+     
+    <!-- <link rel="stylesheet" href="favicon.ico" type="image/x-icon">  网页图表 -->
+
+    <link rel="stylesheet" href="./css/base.css">  
+    <link rel="stylesheet" href="./css/common.css">  <!-- 相关外联样式 -->
+    <link rel="stylesheet" href="./css/expander1.css">
+
+
+</head>
+<body>
+
+    <h2>音视频联合鉴伪系统API_V1  by Temmie</h2>
+    <input type="file" id="video-file"  />
+    <button id="upload-btn">Upload</button>
+
+    <div id="progress-container">
+        <div id="progress-bar">0%</div>
+    </div>
+
+    <div id="response-container">
+    </div>
+
+    <script>
+        var baseUrl = 'http://matex.asia:34975'; // 设置主地址为全局变量（！测试地址勿暴露！）
+
+        document.getElementById('upload-btn').addEventListener('click', function () 
+        {
+            var fileInput = document.getElementById('video-file');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+
+            // 请求/progress接口获取进度信息
+            function updateProgress() 
+            {
+                var progressXhr = new XMLHttpRequest();
+                progressXhr.open('GET', baseUrl + '/progress', true);
+                progressXhr.onload = function () 
+                {
+                    if (progressXhr.status === 200) 
+                    {
+                        var progressData = JSON.parse(progressXhr.responseText);
+                        var progress = (progressData.n / progressData.total * 100).toFixed(2);
+                        var progressBar = document.getElementById('progress-bar');
+                        progressBar.style.width = progress + '%';
+                        progressBar.textContent = progress + '%';
+                    }
+                };
+                progressXhr.send();
+            }
+
+            setInterval(updateProgress, 1000); // 每秒更新一次进度信息
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', baseUrl + '/video', true); // 打开/video接口 
+            xhr.responseType = 'json';
+
+            xhr.onload = function () 
+            {
+                if (xhr.status === 200) 
+                {
+                    var data = xhr.response;
+                    var container = document.getElementById('response-container');
+                    container.innerHTML = '';
+
+                    if (data.vid_to_show_path) 
+                    {
+                        var videoPath = baseUrl + data.vid_to_show_path;
+                        container.innerHTML += '<h3>视频</h3>';
+                        container.innerHTML += '<video controls src="' + videoPath + '"></video>';
+                    }
+
+                    if (data.au_convert_0) 
+                    {
+                        var audioPath0 = baseUrl + data.au_convert_0;
+                        container.innerHTML += '<h3>音频</h3>';
+                        container.innerHTML += '<audio controls src="' + audioPath0 + '"></audio>';
+                    }
+                    if (data.au_convert_1) 
+                    {
+                        var audioPath1 = baseUrl + data.au_convert_1;
+                        container.innerHTML += '<audio controls src="' + audioPath1 + '"></audio>';
+                    }
+
+                    if (data.mvss_pic) 
+                    {
+                        var mvssPicPath = baseUrl + data.mvss_pic;
+                        container.innerHTML += '<h3>MVSS图片</h3>';
+                        container.innerHTML += '<img src="' + mvssPicPath + '" alt="MVSS图片">';
+                    }
+                    if (data.osn_pic) 
+                    {
+                        var osnPicPath = baseUrl + data.osn_pic;
+                        container.innerHTML += '<h3>OSN图片</h3>';
+                        container.innerHTML += '<img src="' + osnPicPath + '" alt="OSN图片">';
+                    }
+
+
+                    container.innerHTML += '<h3>文本数据</h3>';
+                    container.innerHTML += '<p>鉴别结果: ' + data.result_all + '</p>';
+                    container.innerHTML += '<p>MVSS的预测结果为: ' + data.mvss_prediction + '</p>';
+                    container.innerHTML += '<p>OSN的预测结果为: ' + data.osn_prediction + '</p>';
+                    container.innerHTML += '<p>MABC的预测结果为: ' + data.mabc_prediction + '</p>';
+                    container.innerHTML += '<p>传统音轨DeepFake预测结果为: ' + data.result_txt_afd + '</p>';
+                    container.innerHTML += '<p>深度音轨DeepFake预测结果为: ' + data.deep_audio_trace + '</p>';
+                    container.innerHTML += '<p>总伪造概率为: ' + data.scores_all + '</p>';
+                    container.innerHTML += '<p>视觉伪造概率为: ' + data.scores_all_img + '</p>';
+                    container.innerHTML += '<p>听觉伪造概率为: ' + data.scores_all_audio + '</p>';
+
+
+                    
+                    
+                } 
+                else 
+                {
+                    alert('上传失败: ' + xhr.status);
+                }
+            };
+
+            xhr.onerror = function () 
+            {
+                alert('上传过程中出现错误。');
+            };
+
+            xhr.send(formData);
+        });
+    </script>
+   
+        
+</body>
+</html>

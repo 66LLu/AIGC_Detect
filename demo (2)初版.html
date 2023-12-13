@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音视频联合鉴伪系统</title>  <!-- 网页标题 -->
+    
+    <meta
+        name="description" 
+        content="音视频联合鉴伪系统"  
+        >  <!-- 网页描述 -->
+    
+    <meta name="keywords" content="AI 鉴伪">  <!-- 网页关键词 -->
+     
+    <!-- <link rel="stylesheet" href="favicon.ico" type="image/x-icon">  网页图表 -->
+
+    <link rel="stylesheet" href="./css/base.css">  
+    <link rel="stylesheet" href="./css/common.css">  <!-- 相关外联样式 -->
+    <link rel="stylesheet" href="./css/expander1.css">
+
+    <!-- Filepond CSS -->	
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">	
+    <!--    FilePondPluginImagePreview 插件 CSS-->	
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">	
+    <!--    FilePondPluginImageEdit 插件 CSS-->	
+    <link href="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css" rel="stylesheet">	
+</head>
+
+<body>
+
+<!-- '鉴别中.html' 页面 -->
+<div id="preview-page">
+    <!-- 显示盒子 -->
+    
+    <!-- 头部模块 -->
+    <header>
+        <!-- 快捷菜单模块 -->
+        <div class="xtx-shortcut">
+            <input type="file" id="video-file" style="float: left; margin-top: 30px; margin-left: 10px;" />
+
+            <!-- 版心的盒子 -->
+            <nav class="container">
+                <ul class="fl">
+                    <a href="#">
+                    <div class="text">
+                        <div class="text1">音视频联合鉴伪系统</div>
+                        <div class="text2">CUC</div>
+                    </div>  
+                    </a>
+                </ul>              
+                <ul class="fr">
+                    <div class="list">
+                        <li class="special"><a href="首页.html">Home</a> </li>
+                        <li class="special"><a href="demo (2).html">Demo</a> </li>
+                        <!-- <li class="special"><a href="算法详情.html">Algorithm</a> </li> -->
+                        <li>
+                           
+                            <div class="dropdown">
+                                <a href="#">Algorithm</a>
+                                <div class="dropdown-content">
+                                  <a href="算法详情MVSS.html">MVSS</a>
+                                  <a href="算法详情MABC.html">MABC</a>
+                                  <a href="算法详情OSN.html">OSN</a>
+                                  <a href="算法详情 W2V.html">W2V</a>
+                                  <a href="算法详情traditon.html">tradition</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="special"><a href="#">Paper</a> </li>
+                        <li><a href="#"><img src="./github.png.png" alt=""></a></li>  
+                    </div>     
+                </ul>
+                
+            </nav>
+            <div class="line"></div>
+
+            <div class="container">
+                <div class="box1">
+                    
+                    <div class="show">
+                        <div id="preview-box-id" >
+                            <div id="video_show"></div>
+                            <div id="audio_show"></div>
+                        </div> 
+                    </div>
+                    
+                </div>
+
+
+                <div class="button2" id="upload-btn">
+                    <a href="#">光照分析</a>
+                </div>
+                
+            
+                <!-- <div id="progress-container">
+                    <div id="progress-bar">0%</div>
+                </div> -->
+            
+                <div id="response-container">
+                </div>
+
+                <!-- 图片模态窗 -->
+                <div id="myModal" class="modal"> 
+                    <span class="close">×</span>
+                    <img class="modal-content" id="img01">
+                </div>
+
+                <!-- 加载模态窗 -->
+                <div id="loader-modal" class="loader-modal">
+                    <div class="center-box">
+                        <img class="img_loading" src="https://i.imgur.com/oZSPD5y.png" alt="">
+                        <div class="loader">
+                            <div id="loader-progress" class="loader-progress"></div>
+                            <div id="loader-text" class="loader-text"></div>
+                          </div>
+                          <a id="cancel-link" class="cancel-link">取消</a>
+                    </div>
+                </div>
+            
+                <script>
+                    var baseUrl = 'http://matex.asia:34975'; // 设置主地址为全局变量（！测试地址勿暴露！）
+            
+                    document.getElementById('upload-btn').addEventListener('click', function () 
+                    {
+                        var fileInput = document.getElementById('video-file');
+                        var file = fileInput.files[0];
+                        var formData = new FormData();
+                        formData.append('file', file);
+            
+                        // 请求/progress接口获取进度信息
+                        var intervalId;
+                        var xhr = new XMLHttpRequest();
+
+                        function updateProgress() {
+                        var progressXhr = new XMLHttpRequest();
+                        progressXhr.open('GET', baseUrl + '/progress', true);
+                        progressXhr.onload = function () {
+                            if (progressXhr.status === 200) {
+                            var progressData = JSON.parse(progressXhr.responseText);
+                            var progress = (progressData.n / progressData.total * 100).toFixed(2);
+                            var progressBar = document.getElementById('loader-progress');
+                            var progressText = document.getElementById('loader-text');
+                            progressBar.style.width = progress + '%';
+                            // progressText.textContent = 'Loading... ' + progress + '%';
+                            if(progress==100) {
+                                document.getElementById('loader-modal').style.display = 'none';
+                                document.querySelector('.box2').style.display = 'block'; //显示box2
+
+                                clearInterval(intervalId);
+                            }
+                            }
+                        };
+                        progressXhr.send();
+                        }
+
+                        document.getElementById('cancel-link').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        document.getElementById('loader-modal').style.display = 'none';
+                        clearInterval(intervalId);
+                        xhr.abort(); // 取消上传或加载
+                        });
+
+                        document.getElementById('loader-modal').style.display = 'block';
+                        intervalId = setInterval(updateProgress, 1000);
+            
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', baseUrl + '/video', true); // 打开/video接口 
+                        xhr.responseType = 'json';
+            
+                        xhr.onload = function () 
+                        {
+                            if (xhr.status === 200) 
+                            {
+                                var data = xhr.response;
+                                
+
+                                var container = document.getElementById('response-container');
+                                container.innerHTML = '';
+                        
+                            
+                                if (data.vid_to_show_path) 
+                                {
+                                    var container_video_show = document.getElementById('video_show');
+                                    var videoPath = baseUrl + data.vid_to_show_path;
+                                    container_video_show.innerHTML += '<h3>视频</h3><br>';
+                                    container_video_show.innerHTML += '<video controls src="' + videoPath + '"></video>';
+                                }
+            
+                                if (data.au_convert_0) 
+                                {
+                                    var container_audio_show = document.getElementById('audio_show');
+                                    var audioPath0 = baseUrl + data.au_convert_0;
+                                    container_audio_show.innerHTML += '<h3>音频</h3><br>';
+                                    container_audio_show.innerHTML += '<audio controls src="' + audioPath0 + '"></audio><br>';
+                                }
+                                if (data.au_convert_1) 
+                                {
+                                    var container_audio_show = document.getElementById('audio_show');
+                                    var audioPath1 = baseUrl + data.au_convert_1;
+                                    container_audio_show.innerHTML += '<audio controls src="' + audioPath1 + '"></audio><br>';
+                                }
+            
+                                
+                                }
+                                // if (data.osn_pic) 
+                                // {
+                                //     var osnPicPath = baseUrl + data.osn_pic;
+                                //     container.innerHTML += '<h3>OSN图片</h3>';
+                                //     container.innerHTML += '<img  src="' + osnPicPath + '" alt="OSN图片">';
+                                // }
+                                
+
+
+                                var container1 = document.getElementById('mvss');
+                                container1.innerHTML+='MVSS的预测结果为：'+data.mvss_prediction;
+                                if (data.mvss_pic) 
+                                {
+                                    var mvssPicPath = baseUrl + data.mvss_pic;
+                                    container1.innerHTML += '<h3>MVSS图片(点击查看)</h3>';
+                                    container1.innerHTML += '<img id="img_mvss" src="' + mvssPicPath + '" alt="MVSS图片" style="width:100%; position:relative">';
+                                    var modal = document.getElementById("myModal");
+                                    var img1 = document.getElementById("img_mvss");
+                                    var modalImg = document.getElementById("img01");
+                                    img1.onclick = function(){
+                                    modal.style.display = "block";
+                                    modalImg.src = this.src;
+                                    }
+                                    
+                                    var span = document.getElementsByClassName("close")[0];
+                                    span.onclick = function() { 
+                                    modal.style.display = "none";
+                                    }
+                                    
+                                    
+
+                                var container2 = document.getElementById('osn');
+                                container2.innerHTML+='OSN的预测结果为: '+data.osn_prediction;
+                                if (data.osn_pic) 
+                                {
+                                    var osnPicPath = baseUrl + data.osn_pic;
+                                    container2.innerHTML += '<h3>OSN图片(点击查看)</h3>';
+                                    container2.innerHTML += '<img id="img_osn" src="' + osnPicPath + '" alt="OSN图片" style="width:100%; position:relative">';
+                                    var modal = document.getElementById("myModal");
+                                    var img2 = document.getElementById("img_osn");
+                                    var modalImg = document.getElementById("img01");
+                                    img2.onclick = function(){
+                                    modal.style.display = "block";
+                                    modalImg.src = this.src;
+                                    }
+                                    
+                                    var span = document.getElementsByClassName("close")[0];
+                                    span.onclick = function() { 
+                                    modal.style.display = "none";
+                                    }
+                                }
+
+                                var container3 = document.getElementById('mabc');
+                                container3.innerHTML+='MABC的预测结果为: '+data.mabc_prediction;
+
+                                var container4 = document.getElementById('deepfake1');
+                                container4.innerHTML+='传统音轨DeepFake预测结果为: ' + data.result_txt_afd ;
+
+                                var container5 = document.getElementById('deepfake2');
+                                container5.innerHTML+='深度音轨DeepFake预测结果为: ' + data.deep_audio_trace;
+
+                                var container6 = document.getElementById('main_result');
+                                container6.innerHTML+='<p>鉴别结果: ' + data.result_all + '</p>';
+                                container6.innerHTML += '<p>总伪造概率为: ' + data.scores_all + '</p>';
+                                container6.innerHTML += '<p>视觉伪造概率为: ' + data.scores_all_img + '</p>';
+                                container6.innerHTML += '<p>听觉伪造概率为: ' + data.scores_all_audio + '</p>';
+
+                                var container7 = document.getElementById('true_or_flase');
+                                if(data.result_all=="真实")
+                                {
+                                container7.innerHTML+='<img src="https://i.imgur.com/P5p1kuV.png" alt="真实">';
+                                }
+                                else
+                                {
+                                var container7 = document.getElementById('true_or_flase');
+                                container7.innerHTML+='<img src="https://i.imgur.com/EBQd8tF.png" alt="伪造">';
+                                }
+                                
+            
+                                // container.innerHTML += '<h3>文本数据</h3>';
+                                // container.innerHTML += '<p>鉴别结果: ' + data.result_all + '</p>';
+                                // container.innerHTML += '<p>MVSS的预测结果为: ' + data.mvss_prediction + '</p>';
+                                // container.innerHTML += '<p>OSN的预测结果为: ' + data.osn_prediction + '</p>';
+                                // container.innerHTML += '<p>MABC的预测结果为: ' + data.mabc_prediction + '</p>';
+                                // container.innerHTML += '<p>传统音轨DeepFake预测结果为: ' + data.result_txt_afd + '</p>';
+                                // container.innerHTML += '<p>深度音轨DeepFake预测结果为: ' + data.deep_audio_trace + '</p>';
+                                // container.innerHTML += '<p>总伪造概率为: ' + data.scores_all + '</p>';
+                                // container.innerHTML += '<p>视觉伪造概率为: ' + data.scores_all_img + '</p>';
+                                // container.innerHTML += '<p>听觉伪造概率为: ' + data.scores_all_audio + '</p>';
+            
+            
+                                
+                                
+                            } 
+                            else 
+                            {
+                                alert('上传失败: ' + xhr.status);
+                            }
+                        };
+            
+                        xhr.onerror = function () 
+                        {
+                            alert('上传过程中出现错误。');
+                        };
+            
+                        xhr.send(formData);
+                       
+                    });
+                </script>
+
+
+
+                <div class="box2" style="display: none;">
+                    <div id="true_or_flase">
+                        <!-- <img src="https://i.imgur.com/P5p1kuV.png" alt=""> -->
+                    </div>
+                    
+
+                    <div class="sum_analysis">
+                        <ul class="fl">
+                            <div class="text" id="main_result">
+                            </div>
+                        </ul>
+                    </div>
+
+                    <div class="button">
+                        <a href="#">鉴伪报告</a>
+                    </div>
+
+
+                    
+                    <div class="middle">
+                        <div class="menu">
+                            <li class="item" id="user">
+                                <a href="#user" class="btn"><i class="fa fa-user" aria-hidden="true"></i>
+                                    MVSS</a>
+                                <div class="smenu">
+                                    <a href="#" id="mvss">
+                                        <!-- <img id="img_mvss" src="./uploads/1.png" alt="MVSS图片" style="width:100%; position:relative"> -->
+                                    </a> 
+                                </div>
+                            </li>
+
+                            <script>
+                                var modal = document.getElementById("myModal");
+                                var img1 = document.getElementById("img_mvss");
+                                var modalImg = document.getElementById("img01");
+                                img1.onclick = function(){
+                                  modal.style.display = "block";
+                                  modalImg.src = this.src;
+                                }
+                                
+                                var span = document.getElementsByClassName("close")[0];
+                                span.onclick = function() { 
+                                  modal.style.display = "none";
+                                }
+                            </script>
+
+                            <li class="item" id="Messages">
+                                <a href="#Messages" class="btn"><i class="fa fa-envelope" aria-hidden="true"></i>
+                                    OSN</a> 
+                                <div class="smenu">
+                                    <a href="#" id="osn">
+                                        <!-- <img id="img_osn" src="./uploads/1.png" alt="MVSS图片" style="width:100%; position:relative"> -->
+                                    </a> 
+                                </div>
+                            </li>
+
+                            <script>
+                                var modal = document.getElementById("myModal");
+                                var img2 = document.getElementById("img_osn");
+                                var modalImg = document.getElementById("img01");
+                                img2.onclick = function(){
+                                  modal.style.display = "block";
+                                  modalImg.src = this.src;
+                                }
+                                
+                                var span = document.getElementsByClassName("close")[0];
+                                span.onclick = function() { 
+                                  modal.style.display = "none";
+                                }
+                            </script>
+                           
+                            <li class="item" id="Settings">
+                                <a href="#Settings" class="btn"><i class="fa fa-cog" aria-hidden="true"></i>
+                                    MABC</a> 
+                                <div class="smenu">
+                                    <a href="#" id="mabc"></a> 
+                                </div>
+                            </li>
+
+
+                            <li class="item" id="Settings">
+                                <a href="#Settings" class="btn"><i class="fa fa-cog" aria-hidden="true"></i>
+                                    传统音轨Deepfake检测</a> 
+                                <div class="smenu">
+                                    <a href="#" id="deepfake1"></a> 
+                                </div>
+                            </li>
+
+                            <li class="item" id="Settings">
+                                <a href="#Settings" class="btn"><i class="fa fa-cog" aria-hidden="true"></i>
+                                    深度音轨Deepfake检测</a> 
+                                <div class="smenu">
+                                    <a href="#" id="deepfake2"></a> 
+                                </div>
+                            </li>
+                       
+                            
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </header>
+
+
+</div>
+</body>
+</html>
